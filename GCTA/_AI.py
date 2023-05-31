@@ -24,6 +24,7 @@ def generate_AI(y:np.ndarray, X: np.ndarray, var_i: float, grm: np.ndarray, n_in
     m : List[np.ndarray]
         AI matrix, 2*2 
     """
+    print("Generating AI alg for one iteration. \n")
     var_p = np.var(y)
     P = generate_P(y, X, grm, var_i, var_p, n_indiv)
     m_11 = np.matmul(np.matmul(np.matmul(np.matmul(np.matmul(np.matmul(np.transpose(y), P), grm), P), grm), P), y)
@@ -32,6 +33,7 @@ def generate_AI(y:np.ndarray, X: np.ndarray, var_i: float, grm: np.ndarray, n_in
     m_22 = np.matmul(np.matmul(np.matmul(np.matmul(np.transpose(y), P), P), P), y)
     m = np.array([m_11, m_12, m_21, m_22])
     m = m.reshape(2,2)
+    print("Successfully updating AI. \n")
     return m
 
 
@@ -57,12 +59,14 @@ def generate_partial(y:np.ndarray, X: np.ndarray, var_i: float, grm: np.ndarray,
     delta : List[np.ndarray]
         partial derivative matrix, 2*1 
     """
+    print("Generating partial derivative. \n")
     var_p = np.var(y)
     P = generate_P(y, X, grm, var_i, var_p, n_indiv)
     d_1 = np.trace(np.matmul(P, grm)) - np.matmul(np.matmul(np.matmul(np.matmul(np.transpose(y), P), grm), P), y)
     d_2 = np.trace(P) - np.matmul(np.matmul(np.matmul(np.transpose(y), P), P), y)
     d = np.array([d_1, d_2])
     delta = -np.transpose(d)/2
+    print("Successfully generating partial derivative. \n")
     return delta
 
 
